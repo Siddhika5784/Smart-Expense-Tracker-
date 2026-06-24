@@ -8,16 +8,43 @@ import {
 } from "recharts";
 
 function MonthlyTrend() {
-  const data = [
-    { month: "Jan", expense: 22000 },
-    { month: "Feb", expense: 28000 },
-    { month: "Mar", expense: 25000 },
-    { month: "Apr", expense: 31000 },
-    { month: "May", expense: 32450 },
-  ];
+  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+  // Helper: get month name
+  const getMonthName = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString("default", { month: "short" });
+  };
+
+  // Group expenses by month
+  const monthlyMap = {};
+
+  expenses.forEach((expense) => {
+    const month = getMonthName(expense.date);
+
+    if (monthlyMap[month]) {
+      monthlyMap[month] += Number(expense.amount);
+    } else {
+      monthlyMap[month] = Number(expense.amount);
+    }
+  });
+
+  // Convert to array for Recharts
+  const monthOrder = [
+  "Jan","Feb","Mar","Apr","May","Jun",
+  "Jul","Aug","Sep","Oct","Nov","Dec"
+];
+
+// convert object → sorted array
+const data = Object.keys(monthlyMap)
+  .sort((a, b) => monthOrder.indexOf(a) - monthOrder.indexOf(b))
+  .map((month) => ({
+    month,
+    expense: monthlyMap[month],
+  }));
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm ">
+    <div className="bg-white rounded-2xl p-5 shadow-sm">
       <div className="flex justify-between mb-10">
         <h2 className="text-xl font-semibold">Monthly Trend</h2>
 

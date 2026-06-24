@@ -1,6 +1,6 @@
 
 function RecentTransactions({ expenses }) {
-  const recentExpenses = [...expenses].reverse().slice(0, 5);
+  const recentExpenses = [...expenses].slice(0, 5);
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6 mt-6">

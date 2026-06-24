@@ -7,7 +7,7 @@ function ExpenseList({ expenses, deleteExpense,setEditExpense }) {
       Your Expenses
     </h2>
 
-    {[...expenses].reverse().map((expense)=>(
+    {[...expenses].map((expense)=>(
       <ExpenseItem
         key = {expense.id}
         expense={expense}

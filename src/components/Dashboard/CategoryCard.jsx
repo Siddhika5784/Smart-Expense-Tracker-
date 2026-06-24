@@ -6,14 +6,46 @@ import {
 } from "recharts";
 
 function CategoryCard() {
-  const categories = [
-    { name: "Food", amount: 8250, percent: 25, color: "#f97316" },
-    { name: "Travel", amount: 6400, percent: 20, color: "#3b82f6" },
-    { name: "Shopping", amount: 5600, percent: 17, color: "#ec4899" },
-    { name: "Bills", amount: 4800, percent: 15, color: "#14b8a6" },
-    { name: "Entertainment", amount: 3200, percent: 10, color: "#8b5cf6" },
-    { name: "Education", amount: 2200, percent: 7, color: "#eab308" },
+  const expenses =
+    JSON.parse(localStorage.getItem("expenses")) || [];
+
+  const categoryTotals = {};
+
+  expenses.forEach((expense) => {
+    const category = expense.category;
+
+    if (categoryTotals[category]) {
+      categoryTotals[category] += Number(expense.amount);
+    } else {
+      categoryTotals[category] = Number(expense.amount);
+    }
+  });
+
+  const colors = [
+    "#f97316",
+    "#3b82f6",
+    "#ec4899",
+    "#14b8a6",
+    "#8b5cf6",
+    "#eab308",
   ];
+
+  const totalAmount = expenses.reduce(
+    (sum, expense) => sum + Number(expense.amount),
+    0
+  );
+
+  const categories = Object.entries(categoryTotals).map(
+    ([name, amount], index) => ({
+      name,
+      amount,
+      percent:
+        totalAmount > 0
+          ? Math.round((amount / totalAmount) * 100)
+          : 0,
+      color: colors[index % colors.length],
+    })
+  );
 
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm">
@@ -50,8 +82,13 @@ function CategoryCard() {
           </ResponsiveContainer>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <p className="text-lg font-bold">₹32,450</p>
-            <p className="text-sm text-gray-500">Total</p>
+            <p className="text-lg font-bold">
+              ₹{totalAmount}
+            </p>
+
+            <p className="text-sm text-gray-500">
+              Total
+            </p>
           </div>
         </div>
 
@@ -64,7 +101,9 @@ function CategoryCard() {
               <div className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: item.color }}
+                  style={{
+                    backgroundColor: item.color,
+                  }}
                 ></span>
 
                 <span className="text-gray-700">

@@ -11,22 +11,28 @@ function AddExpense() {
 
   const [editExpense, setEditExpense] = useState(null);
 
-  function addExpense(newExpense) {
-    setExpenses([...expenses, newExpense]);
-  }
+ function addExpense(newExpense) {
+  const updated = [...expenses, newExpense].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
+  setExpenses(updated);
+}
 
   function deleteExpense(id) {
     setExpenses(expenses.filter((expense) => expense.id !== id));
   }
 
-  function updateExpense(updatedExpense) {
-    setExpenses(
-      expenses.map((expense) =>
-        expense.id === updatedExpense.id ? updatedExpense : expense,
-      ),
-    );
-    setEditExpense(null);
-  }
+ function updateExpense(updatedExpense) {
+  const updated = expenses
+    .map((expense) =>
+      expense.id === updatedExpense.id ? updatedExpense : expense
+    )
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  setExpenses(updated);
+  setEditExpense(null);
+}
 
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
