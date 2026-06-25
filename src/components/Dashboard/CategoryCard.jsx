@@ -6,18 +6,23 @@ import {
 } from "recharts";
 
 function CategoryCard() {
-  const expenses =
-    JSON.parse(localStorage.getItem("expenses")) || [];
+  // Safely parse localStorage and filter out any accidental null values immediately
+  const rawExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  const expenses = rawExpenses.filter(expense => expense !== null);
 
   const categoryTotals = {};
 
   expenses.forEach((expense) => {
-    const category = expense.category;
+    // Optional chaining (?.) stops the crash if an expense item is malformed
+    const category = expense?.category;
+    if (!category) return; // Skip item completely if it has no category name
+
+    const amount = Number(expense?.amount) || 0;
 
     if (categoryTotals[category]) {
-      categoryTotals[category] += Number(expense.amount);
+      categoryTotals[category] += amount;
     } else {
-      categoryTotals[category] = Number(expense.amount);
+      categoryTotals[category] = amount;
     }
   });
 
@@ -30,8 +35,9 @@ function CategoryCard() {
     "#eab308",
   ];
 
+  // Added optional chaining and fallback to prevent NaN errors
   const totalAmount = expenses.reduce(
-    (sum, expense) => sum + Number(expense.amount),
+    (sum, expense) => sum + (Number(expense?.amount) || 0),
     0
   );
 
@@ -53,7 +59,6 @@ function CategoryCard() {
         <h2 className="text-xl font-semibold">
           Expenses by Category
         </h2>
-
         <button className="text-sm border border-gray-200 px-3 py-1 rounded-lg text-gray-600">
           This Month
         </button>
@@ -85,7 +90,6 @@ function CategoryCard() {
             <p className="text-lg font-bold">
               ₹{totalAmount}
             </p>
-
             <p className="text-sm text-gray-500">
               Total
             </p>
@@ -105,12 +109,10 @@ function CategoryCard() {
                     backgroundColor: item.color,
                   }}
                 ></span>
-
                 <span className="text-gray-700">
                   {item.name}
                 </span>
               </div>
-
               <span className="text-gray-700">
                 ₹{item.amount} ({item.percent}%)
               </span>
