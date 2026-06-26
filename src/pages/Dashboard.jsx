@@ -37,7 +37,7 @@ function Dashboard() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-9">
           <StatCard title="Total Income" amount={`₹${totalIncome}`} />
 
-          <StatCard title="Total Expenses" amount={`₹${totalExpenses}`} />
+          <StatCard  classNmae ="bg-blue"title="Total Expenses" amount={`₹${totalExpenses}`} />
 
           <StatCard title="Remaining Balance" amount={`₹${remainingBalance}`} />
 

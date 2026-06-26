@@ -25,7 +25,25 @@ function Sidebar() {
         Transactions
       </NavLink>
 
+      <NavLink
+        to="/Budget"
+        className="block text-gray-600 px-4 py-3 rounded-xl hover:bg-gray-100 mb-2"
+      >
+        Budget
+      </NavLink>
+      <NavLink
+        to="/CategoryAnalysis"
+        className="block text-gray-600 px-4 py-3 rounded-xl hover:bg-gray-100 mb-2"
+      >
+        Category Analysis
+      </NavLink>
 
+       <NavLink
+        to="/Goals"
+        className="block text-gray-600 px-4 py-3 rounded-xl hover:bg-gray-100 mb-2"
+      >
+        Goals
+      </NavLink>
     </div>
   );
 }
