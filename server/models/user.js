@@ -1,9 +1,9 @@
-const mongoose = reuire("mongoose");
+const mongoose = require("mongoose");
   const userSchema = new mongoose.Schema(
     {
       name:{
         type:String,
-        reuired:true,
+        required:true,
         trim:true,
       },
       email:{
