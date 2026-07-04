@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 
 
 const registerUser = async (req, res) => {
+
+  console.log("Request Body:", req.body);
   try {
     // Extract data from request body
     const { name, email, password } = req.body;
@@ -37,11 +39,18 @@ const newUser = await User.create({
   password: hashedPassword,
 });
 
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      data: newUser,
-    });
+// Remove password before sending response
+const userResponse = {
+  _id: newUser._id,
+  name: newUser.name,
+  email: newUser.email,
+};
+
+res.status(201).json({
+  success: true,
+  message: "User registered successfully",
+  user: userResponse,
+});
 
   } catch (error) {
     res.status(500).json({

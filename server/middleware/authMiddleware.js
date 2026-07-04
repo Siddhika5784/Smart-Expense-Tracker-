@@ -31,30 +31,3 @@ const authMiddleware = (req, res, next) => {
 };
 
 module.exports = authMiddleware;
-
-
-// Generate JWT Token
-const token = jwt.sign(
-  {
-    userId: user._id,
-    email: user.email,
-  },
-  process.env.JWT_SECRET,
-  {
-    expiresIn: "7d",
-  }
-);
-
-// Remove password before sending response
-const userResponse = {
-  _id: user._id,
-  name: user.name,
-  email: user.email,
-};
-
-res.status(200).json({
-  success: true,
-  message: "Login Successful",
-  token,
-  user: userResponse,
-});
