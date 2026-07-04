@@ -1,6 +1,7 @@
 import ExpenseItem from "./ExpenseItem"
 
 function ExpenseList({ expenses, deleteExpense,setEditExpense }) {
+  console.log("Expenses received:", expenses);
   return(
   <div className = "mt-8">
     <h2 className = "text-2xl font-bold mb-4">
@@ -9,7 +10,7 @@ function ExpenseList({ expenses, deleteExpense,setEditExpense }) {
 
     {[...expenses].map((expense)=>(
       <ExpenseItem
-        key = {expense.id}
+        key = {expense._id}
         expense={expense}
         deleteExpense = {deleteExpense}
         setEditExpense={setEditExpense}

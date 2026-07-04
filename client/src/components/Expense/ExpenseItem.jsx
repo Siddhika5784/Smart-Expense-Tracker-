@@ -14,14 +14,17 @@ function ExpenseItem({ expense, deleteExpense, setEditExpense }) {
        
        <div className=" ">
         <button
-          onClick={() => setEditExpense(expense)}
+          onClick={() => {
+            console.log("Expense clicked:", expense);
+            setEditExpense(expense);
+          }}
           className="text-blue-500 mt-2 hover:text-blue-700"
         >
           Edit
         </button>
 
         <button
-          onClick={() => deleteExpense(expense.id)}
+          onClick={() => deleteExpense(expense._id)}
           className="text-red-500 mt-2 hover:text-red-700"
         >
           Delete

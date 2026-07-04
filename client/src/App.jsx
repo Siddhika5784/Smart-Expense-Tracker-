@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AddExpense from "./pages/AddExpense";
 import Transactions from "./pages/Transactions";
@@ -12,8 +13,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+       
         {/* Login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Redirect */}
         <Route path="/" element={<Navigate to="/login" />} />
@@ -35,6 +39,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/transactions"
           element={
@@ -43,6 +48,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/budget"
           element={
@@ -51,6 +57,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/category-analysis"
           element={
@@ -59,6 +66,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/goals"
           element={

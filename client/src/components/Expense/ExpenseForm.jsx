@@ -9,6 +9,8 @@ function ExpenseForm({ addExpense,editExpense,updateExpense }) {
 
  useEffect(() => {
   if (editExpense) {
+    console.log("editExpense:", editExpense);
+
     setTitle(editExpense.title);
     setAmount(editExpense.amount);
     setCategory(editExpense.category);
@@ -31,7 +33,6 @@ function ExpenseForm({ addExpense,editExpense,updateExpense }) {
     }
 
     const newExpense = {
-      id: Date.now(),
       title,
       amount: Number(amount),
       category,
@@ -42,7 +43,7 @@ function ExpenseForm({ addExpense,editExpense,updateExpense }) {
     if (editExpense) {
   updateExpense({
     ...newExpense,
-    id: editExpense.id,
+    _id: editExpense._id,
   });
 } else {
   addExpense(newExpense);

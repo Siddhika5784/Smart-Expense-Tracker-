@@ -2,41 +2,78 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/Dashboard/Sidebar.jsx";
 import ExpenseForm from "../components/expense/ExpenseForm";
 import ExpenseList from "../components/expense/ExpenseList";
+import api from "../services/api";
+
+
 
 function AddExpense() {
-  const [expenses, setExpenses] = useState(() => {
-    const savedExpenses = localStorage.getItem("expenses");
-    return savedExpenses ? JSON.parse(savedExpenses) : [];
-  });
+  const [expenses, setExpenses] = useState([]);
+ const [editExpense, setEditExpense] = useState(null);
 
-  const [editExpense, setEditExpense] = useState(null);
+  const fetchExpenses = async () => {
+  try {
+    const response = await api.get("/expenses");
+    console.log("API Response:", response.data);
 
- function addExpense(newExpense) {
-  const updated = [...expenses, newExpense].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+    setExpenses(response.data.expenses);
 
-  setExpenses(updated);
-}
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  function deleteExpense(id) {
-    setExpenses(expenses.filter((expense) => expense.id !== id));
+ const addExpense = async (newExpense) => {
+  try {
+
+    await api.post("/expenses", newExpense);
+
+    fetchExpenses();
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+};
+
+  const deleteExpense = async (id) => {
+
+  try {
+
+    await api.delete(`/expenses/${id}`);
+
+    fetchExpenses();
+
+  } catch (error) {
+
+    console.log(error);
+
   }
 
- function updateExpense(updatedExpense) {
-  const updated = expenses
-    .map((expense) =>
-      expense.id === updatedExpense.id ? updatedExpense : expense
-    )
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+};
 
-  setExpenses(updated);
-  setEditExpense(null);
-}
+const updateExpense = async (updatedExpense) => {
+  try {
 
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }, [expenses]);
+    await api.put(
+      `/expenses/${updatedExpense._id}`,
+      updatedExpense
+    );
+
+    fetchExpenses();
+
+    setEditExpense(null);
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+};
+
+useEffect(() => {
+  fetchExpenses();
+}, []);
 
   return (
     <div className="flex min-h-screen bg-gray-50">
