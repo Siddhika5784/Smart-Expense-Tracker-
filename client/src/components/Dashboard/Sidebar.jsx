@@ -1,5 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+  
 function Sidebar() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+
+    logout();
+
+    navigate("/login");
+
+};
+
   return (
     <div className=" sm:w-55 lg:w-64 min-h-screen bg-white border-gray-600 p-6">
       <h2 className="text-2xl font-bold text-blue-600 mb-8">Smart Spend</h2>
@@ -44,6 +57,13 @@ function Sidebar() {
       >
         Goals
       </NavLink>
+
+      <button
+    onClick={handleLogout}
+    className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
+>
+    Logout
+</button>
     </div>
   );
 }
