@@ -5,7 +5,7 @@ function ExpenseItem({ expense, deleteExpense, setEditExpense }) {
         <h3 className="text-lg font-semibold">{expense.title}</h3>
 
         <p className="text-gray-500">
-          {expense.category} •{expense.date}
+          {expense.category} • {new Date(expense.date).toLocaleDateString("en-IN")}
         </p>
       </div>
 

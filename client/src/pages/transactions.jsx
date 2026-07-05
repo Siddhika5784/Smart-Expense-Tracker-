@@ -67,10 +67,10 @@ function Transactions() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className=" flex min-h-screen bg-gray-50">
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <main className=" ml-64 flex-1 p-8">
 
         <h1 className="text-3xl font-bold mb-6">
           Transactions

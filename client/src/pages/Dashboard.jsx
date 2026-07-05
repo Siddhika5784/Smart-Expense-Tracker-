@@ -32,7 +32,7 @@ function Dashboard() {
     <div className="flex min-h-screen bg-gray-50 ">
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <main className=" ml-64 flex-1 p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
 

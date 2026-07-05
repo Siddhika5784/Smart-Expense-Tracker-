@@ -1,14 +1,37 @@
 import Sidebar from "../components/Dashboard/Sidebar";
 import BudgetForm from "../components/Budget/BudgetForm";
+import { useState, useEffect } from "react";
+import api from "../services/api";
 
 function Budget() {
-  // Get expenses from Local Storage
-  const expenses =
-    JSON.parse(localStorage.getItem("expenses")) || [];
+  const [expenses, setExpenses] = useState([]);
+  const [budgets, setBudgets] = useState([]);
 
-  // Get budgets from Local Storage
-  const budgets =
-    JSON.parse(localStorage.getItem("budgets")) || {};
+  const fetchExpenses = async () => {
+    try {
+      const response = await api.get("/expenses");
+
+      setExpenses(response.data.expenses);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchBudgets = async () => {
+    try {
+      const response = await api.get("/budget");
+
+      setBudgets(response.data.budgets);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchExpenses();
+
+    fetchBudgets();
+  }, []);
 
   // Store total spent for each category
   const categorySpent = {};
@@ -24,15 +47,16 @@ function Budget() {
   });
 
   // Total Budget
-  const totalBudget = Object.values(budgets).reduce(
-    (sum, budget) => sum + Number(budget),
-    0
-  );
+  const totalBudget = budgets.reduce(
+  (sum, budget) => sum + budget.amount,
+  0
+)
+
 
   // Total Spent
   const totalSpent = expenses.reduce(
     (sum, expense) => sum + Number(expense.amount),
-    0
+    0,
   );
 
   // Remaining Budget
@@ -40,22 +64,20 @@ function Budget() {
 
   // Overall Progress
   const overallProgress =
-    totalBudget > 0
-      ? Math.min((totalSpent / totalBudget) * 100, 100)
-      : 0;
+    totalBudget > 0 ? Math.min((totalSpent / totalBudget) * 100, 100) : 0;
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="  flex min-h-screen bg-gray-50">
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <main className=" ml-64 flex-1 p-8">
         {/* Heading */}
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Monthly Budget
         </h1>
 
         {/* Budget Form */}
-        <BudgetForm />
+        <BudgetForm  fetchBudgets={fetchBudgets}/>
 
         {/* Budget Table */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mt-8">
@@ -85,32 +107,26 @@ function Budget() {
             </thead>
 
             <tbody>
-              {Object.entries(budgets).map(([category, budget]) => {
-                const spent = categorySpent[category] || 0;
+              {budgets.map((budget) => {
+                const spent = categorySpent[budget.category] || 0;
 
-                const remaining = Number(budget) - spent;
+                const remaining = Number(budget.amount) - spent;
 
                 const progress =
-                  Number(budget) > 0
-                    ? Math.min((spent / Number(budget)) * 100, 100)
+                  Number(budget.amount) > 0
+                    ? Math.min((spent / Number(budget.amount)) * 100, 100)
                     : 0;
 
                 return (
                   <tr
-                    key={category}
+                    key={budget.category}
                     className="border-b border-gray-200 hover:bg-gray-50"
                   >
-                    <td className="px-6 py-5 font-medium">
-                      {category}
-                    </td>
+                    <td className="px-6 py-5 font-medium">{budget.category}</td>
 
-                    <td className="px-6 py-5">
-                      ₹{budget}
-                    </td>
+                    <td className="px-6 py-5">₹{budget.amount}</td>
 
-                    <td className="px-6 py-5">
-                      ₹{spent}
-                    </td>
+                    <td className="px-6 py-5">₹{spent}</td>
 
                     <td
                       className={`px-6 py-5 ${
@@ -129,8 +145,8 @@ function Budget() {
                             progress >= 90
                               ? "bg-red-500 h-3 rounded-full"
                               : progress >= 70
-                              ? "bg-yellow-500 h-3 rounded-full"
-                              : "bg-green-500 h-3 rounded-full"
+                                ? "bg-yellow-500 h-3 rounded-full"
+                                : "bg-green-500 h-3 rounded-full"
                           }
                           style={{
                             width: `${progress}%`,
@@ -149,21 +165,13 @@ function Budget() {
 
             <tfoot>
               <tr className="bg-gray-100 border-t-2 border-gray-300">
-                <td className="px-6 py-5 font-bold">
-                  Total
-                </td>
+                <td className="px-6 py-5 font-bold">Total</td>
 
-                <td className="px-6 py-5 font-bold">
-                  ₹{totalBudget}
-                </td>
+                <td className="px-6 py-5 font-bold">₹{totalBudget}</td>
 
-                <td className="px-6 py-5 font-bold">
-                  ₹{totalSpent}
-                </td>
+                <td className="px-6 py-5 font-bold">₹{totalSpent}</td>
 
-                <td className="px-6 py-5 font-bold">
-                  ₹{totalRemaining}
-                </td>
+                <td className="px-6 py-5 font-bold">₹{totalRemaining}</td>
 
                 <td className="px-6 py-5">
                   <div className="w-full bg-gray-200 rounded-full h-3">

@@ -1,16 +1,15 @@
 import { useState } from "react";
+import api from "../../services/api";
 
-function BudgetForm() {
-  const [budgets, setBudgets] = useState(
-    JSON.parse(localStorage.getItem("budgets")) || {
-      Food: "",
-      Travel: "",
-      Shopping: "",
-      Bills: "",
-      Entertainment: "",
-      Education: "",
-    }
-  );
+function BudgetForm({ fetchBudgets }) {
+const [budgets, setBudgets] = useState({
+  Food: "",
+  Travel: "",
+  Shopping: "",
+  Bills: "",
+  Entertainment: "",
+  Education: "",
+});
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -21,16 +20,36 @@ function BudgetForm() {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    localStorage.setItem(
-      "budgets",
-      JSON.stringify(budgets)
-    );
+  try {
 
-    alert("Budget Saved Successfully!");
+    const budgetEntries = Object.entries(budgets);
+
+    for (const [category, amount] of budgetEntries) {
+
+      if (!amount) continue;
+
+      await api.post("/budget", {
+        category,
+        amount: Number(amount),
+      });
+
+    }
+
+    alert("Budgets Saved Successfully");
+
+    fetchBudgets();
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Failed to Save Budgets");
+
   }
+};
 
   return (
     <form

@@ -5,8 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import AddExpense from "./pages/AddExpense";
 import Transactions from "./pages/Transactions";
 import Budget from "./pages/Budget";
-import CategoryAnalysis from "./pages/CategoryAnalysis";
-import Goals from "./pages/Goals";
+import Insights from "./pages/Insights";
 import Login from "./pages/Login";
 
 function App() {
@@ -59,19 +58,10 @@ function App() {
         />
 
         <Route
-          path="/category-analysis"
+          path="/Insights"
           element={
             <ProtectedRoute>
-              <CategoryAnalysis />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/goals"
-          element={
-            <ProtectedRoute>
-              <Goals />
+              <Insights />
             </ProtectedRoute>
           }
         />
