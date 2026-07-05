@@ -5,14 +5,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function CategoryCard() {
-  // Safely parse localStorage and filter out any accidental null values immediately
-  const rawExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-  const expenses = rawExpenses.filter(expense => expense !== null);
+function CategoryCard({expenses}) {
+  
+ const validExpenses = expenses.filter(
+  (expense) => expense !== null
+);
 
   const categoryTotals = {};
 
-  expenses.forEach((expense) => {
+  validExpenses.forEach((expense) => {
     // Optional chaining (?.) stops the crash if an expense item is malformed
     const category = expense?.category;
     if (!category) return; // Skip item completely if it has no category name
@@ -36,7 +37,7 @@ function CategoryCard() {
   ];
 
   // Added optional chaining and fallback to prevent NaN errors
-  const totalAmount = expenses.reduce(
+  const totalAmount = validExpenses.reduce(
     (sum, expense) => sum + (Number(expense?.amount) || 0),
     0
   );
@@ -53,6 +54,21 @@ function CategoryCard() {
     })
   );
 
+  if (validExpenses.length === 0) {
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center h-80">
+      <p className="text-5xl mb-3">📊</p>
+
+      <h2 className="text-xl font-semibold">
+        No Expenses Yet
+      </h2>
+
+      <p className="text-gray-500 mt-2 text-center">
+        Add your first expense to view category analysis.
+      </p>
+    </div>
+  );
+}
   return (
     <div className="bg-white rounded-2xl p-5 shadow-sm">
       <div className="flex justify-between items-center mb-5">

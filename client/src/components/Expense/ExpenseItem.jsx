@@ -18,7 +18,7 @@ function ExpenseItem({ expense, deleteExpense, setEditExpense }) {
             console.log("Expense clicked:", expense);
             setEditExpense(expense);
           }}
-          className="text-blue-500 mt-2 hover:text-blue-700"
+          className="text-blue-500 mt-2  hover:text-blue-700"
         >
           Edit
         </button>
