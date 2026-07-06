@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import ExpenseForm from "../components/expense/ExpenseForm";
-import ExpenseList from "../components/expense/ExpenseList";
+import ExpenseForm from "../components/Expense/ExpenseForm";
+import ExpenseList from "../components/Expense/ExpenseList";
 import api from "../services/api";
 import Layout from "../components/Layout/Layout";
 import LoadingSpinner from "../components/Common/LoadingSpinner";
