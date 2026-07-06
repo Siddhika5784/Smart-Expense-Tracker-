@@ -5,7 +5,7 @@ const expenseRoutes = require("./routes/expenseRoutes");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-const budgetRoutes = require("./routes/budgetRoutes");
+const budgetRoutes = require("./routes/BudgetRoutes");
 
 // Load environment variables
 dotenv.config();
