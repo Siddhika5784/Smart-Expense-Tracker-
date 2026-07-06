@@ -3,16 +3,17 @@ import TransactionItem from "./TransactionItem";
 function TransactionList({ expenses }) {
   if (expenses.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-10 text-center">
+      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-16 text-center">
 
-        <p className="text-5xl">📭</p>
+        <div className="text-6xl mb-4">📭</div>
 
-        <h2 className="text-2xl font-semibold mt-4">
+        <h2 className="text-2xl font-semibold text-gray-800">
           No Transactions Found
         </h2>
 
-        <p className="text-gray-500 mt-2">
-          Try changing your search or filters, or add a new expense.
+        <p className="mt-3 text-gray-500 max-w-sm mx-auto">
+          Try changing your search or filters, or start tracking your spending
+          by adding a new expense.
         </p>
 
       </div>
@@ -20,15 +21,13 @@ function TransactionList({ expenses }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6">
-
+    <div className="space-y-5">
       {expenses.map((expense) => (
         <TransactionItem
           key={expense._id}
           expense={expense}
         />
       ))}
-
     </div>
   );
 }

@@ -18,7 +18,7 @@ function ExpenseInsight({ expenses }) {
       value={largestExpense?.title || "No Data"}
       subtitle={
         largestExpense
-          ? `₹${largestExpense.amount}`
+          ? `₹${largestExpense.amount.toLocaleString("en-IN")}`
           : "Add expenses to view insights"
       }
       color="#8b5cf6"

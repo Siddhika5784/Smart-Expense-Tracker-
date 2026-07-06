@@ -27,7 +27,7 @@ function PaymentInsight({ expenses }) {
       value={mostUsedMethod || "No Data"}
       subtitle={
         highestCount > 0
-          ? `${highestCount} Transactions`
+          ? `${highestCount.toLocaleString("en-IN")} Transactions`
           : "Add expenses to view insights"
       }
       color="#3b82f6"

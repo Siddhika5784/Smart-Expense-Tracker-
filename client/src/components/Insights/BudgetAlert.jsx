@@ -37,7 +37,7 @@ function BudgetAlert({ expenses, budgets }) {
       }
       subtitle={
         exceededCategories.length > 0
-          ? `Exceeded by ₹${exceededCategories[0].exceededBy}`
+          ? `Exceeded by ₹${exceededCategories[0].exceededBy.toLocaleString("en-IN")}`
           : "All budgets are within limits"
       }
       color="#f97316"

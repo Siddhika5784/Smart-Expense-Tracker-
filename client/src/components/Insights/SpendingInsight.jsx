@@ -27,7 +27,7 @@ function SpendingInsight({ expenses }) {
       value={highestCategory || "No Data"}
       subtitle={
         highestAmount > 0
-          ? `₹${highestAmount}`
+          ? `₹${highestAmount.toLocaleString("en-IN")}`
           : "Add expenses to view insights"
       }
       color="#ef4444"

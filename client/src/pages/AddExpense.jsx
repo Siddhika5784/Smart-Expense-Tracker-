@@ -1,96 +1,100 @@
 import { useState, useEffect } from "react";
-import Sidebar from "../components/Dashboard/Sidebar.jsx";
 import ExpenseForm from "../components/expense/ExpenseForm";
 import ExpenseList from "../components/expense/ExpenseList";
 import api from "../services/api";
-
-
+import Layout from "../components/Layout/Layout";
+import LoadingSpinner from "../components/Common/Loading";
 
 function AddExpense() {
   const [expenses, setExpenses] = useState([]);
- const [editExpense, setEditExpense] = useState(null);
+  const [editExpense, setEditExpense] = useState(null);
+  const [loading, setLoading] =useState(true);
 
   const fetchExpenses = async () => {
-  try {
-    const response = await api.get("/expenses");
-    console.log("API Response:", response.data);
+    setLoading(true);
+    try {
+      const response = await api.get("/expenses");
+      setExpenses(response.data.expenses);
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setLoading(false);
+    }
+  };
 
-    setExpenses(response.data.expenses);
-
-  } catch (error) {
-    console.log(error);
-  }
-};
-
- const addExpense = async (newExpense) => {
-  try {
-
-    await api.post("/expenses", newExpense);
-
-    fetchExpenses();
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-};
+  const addExpense = async (newExpense) => {
+    try {
+      await api.post("/expenses", newExpense);
+      fetchExpenses();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteExpense = async (id) => {
+    try {
+      await api.delete(`/expenses/${id}`);
+      fetchExpenses();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  try {
+  const updateExpense = async (updatedExpense) => {
+    try {
+      await api.put(`/expenses/${updatedExpense._id}`, updatedExpense);
 
-    await api.delete(`/expenses/${id}`);
+      fetchExpenses();
+      setEditExpense(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     fetchExpenses();
+  }, []);
 
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-const updateExpense = async (updatedExpense) => {
-  try {
-
-    await api.put(
-      `/expenses/${updatedExpense._id}`,
-      updatedExpense
-    );
-
-    fetchExpenses();
-
-    setEditExpense(null);
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-};
-
-useEffect(() => {
-  fetchExpenses();
-}, []);
+if (loading) {
+  return (
+    <Layout>
+      <LoadingSpinner text="Loading your expenses..." />
+    </Layout>
+  );
+}
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+ <Layout>
 
-      <main className=" ml-64 flex-1 p-8">
-        <ExpenseForm
-          addExpense={addExpense}
-          editExpense={editExpense}
-          updateExpense={updateExpense}
-        />
+        {/* Page Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Add Expense
+          </h1>
 
-        <ExpenseList expenses={expenses} 
-        deleteExpense={deleteExpense}
-         setEditExpense={setEditExpense} />
-      </main>
-    </div>
+          <p className="mt-2 text-gray-500">
+            Record a new expense and keep track of your spending.
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="max-w-3xl">
+          <ExpenseForm
+            addExpense={addExpense}
+            editExpense={editExpense}
+            updateExpense={updateExpense}
+          />
+        </div>
+
+        {/* Expense List */}
+        <div className="mt-10">
+          <ExpenseList
+            expenses={expenses}
+            deleteExpense={deleteExpense}
+            setEditExpense={setEditExpense}
+          />
+        </div>
+    </Layout>
   );
 }
 

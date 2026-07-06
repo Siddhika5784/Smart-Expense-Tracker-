@@ -58,72 +58,104 @@ function ExpenseForm({ addExpense,editExpense,updateExpense }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white rounded-2xl shadow-sm p-6"
+  <form
+    onSubmit={handleSubmit}
+    className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6"
+  >
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      {/* Expense Title */}
+      <div>
+        <label className="block text-gray-600 mb-2">
+          Expense Title
+        </label>
+
+        <input
+          type="text"
+          placeholder="Enter expense title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      {/* Amount */}
+      <div>
+        <label className="block text-gray-600 mb-2">
+          Amount
+        </label>
+
+        <input
+          type="number"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      {/* Category */}
+      <div>
+        <label className="block text-gray-600 mb-2">
+          Category
+        </label>
+
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-blue-500"
+        >
+          <option>Food</option>
+          <option>Travel</option>
+          <option>Shopping</option>
+          <option>Bills</option>
+          <option>Education</option>
+          <option>Entertainment</option>
+        </select>
+      </div>
+
+      {/* Payment */}
+      <div>
+        <label className="block text-gray-600 mb-2">
+          Payment Method
+        </label>
+
+        <select
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
+          className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-blue-500"
+        >
+          <option>Cash</option>
+          <option>UPI</option>
+          <option>Credit Card</option>
+          <option>Debit Card</option>
+        </select>
+      </div>
+
+      {/* Date */}
+      <div className="md:col-span-2">
+        <label className="block text-gray-600 mb-2">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+    </div>
+
+    <button
+      type="submit"
+      className="mt-6 w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transition"
     >
-      <h1 className="text-3xl font-bold mb-6">Add Expense</h1>
-
-      <label className="block text-gray-600 mb-2">Expense Title</label>
-<input
-  type="text"
-  placeholder="Enter expense title"
-  value={title}
-  onChange={(e) => setTitle(e.target.value)}
-  className="w-full border p-3 rounded-xl mb-4"
-/>
-
-<label className="block text-gray-600 mb-2">Amount</label>
-<input
-  type="number"
-  placeholder="Enter amount"
-  value={amount}
-  onChange={(e) => setAmount(e.target.value)}
-  className="w-full border p-3 rounded-xl mb-4"
-/>
-
-<label className="block text-gray-600 mb-2">Category</label>
-<select
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
-  className="w-full border p-3 rounded-xl mb-4"
->
-  <option>Food</option>
-  <option>Travel</option>
-  <option>Shopping</option>
-  <option>Bills</option>
-  <option>Education</option>
-  <option>Entertainment</option>
-</select>
-
-<label className="block text-gray-600 mb-2">Payment Method</label>
-<select
-  value={paymentMethod}
-  onChange={(e) => setPaymentMethod(e.target.value)}
-  className="w-full border p-3 rounded-xl mb-4"
->
-  <option>Cash</option>
-  <option>UPI</option>
-  <option>Credit Card</option>
-  <option>Debit Card</option>
-</select>
-
-<label className="block text-gray-600 mb-2">Date</label>
-<input
-  type="date"
-  value={date}
-  onChange={(e) => setDate(e.target.value)}
-  className="w-full border p-3 rounded-xl mb-4"
-/>
-
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-6 py-3 rounded-xl transition duration-300 ease-in-out hover:bg-blue-500"
-      >
-        {editExpense ? "Update Expense" : "Add Expense"}
-      </button>
-    </form>
-  );
+      {editExpense ? "Update Expense" : "Add Expense"}
+    </button>
+  </form>
+);
 }
 
 export default ExpenseForm;
