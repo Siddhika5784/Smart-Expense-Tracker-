@@ -5,6 +5,7 @@ const expenseRoutes = require("./routes/expenseRoutes");
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const budgetRoutes = require("./routes/budgetRoutes");
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/budget", budgetRoutes);
 
 connectDB();
 
