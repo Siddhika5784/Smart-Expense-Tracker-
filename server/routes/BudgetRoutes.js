@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   saveBudget,
   getBudgets,
-} = require("../controllers/budgetController");
+} = require("../controllers/BudgetController");
 
 const protect = require("../middleware/authMiddleware");
 
