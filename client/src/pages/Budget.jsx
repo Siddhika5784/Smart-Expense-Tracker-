@@ -11,7 +11,7 @@ import {
   Film,
   BookOpen,
 } from "lucide-react";
-import LoadingSpinner from "../components/common/Loading";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 function Budget() {
   const [expenses, setExpenses] = useState([]);
@@ -26,7 +26,7 @@ function Budget() {
       setExpenses(response.data.expenses);
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -39,7 +39,7 @@ function Budget() {
       setBudgets(response.data.budgets);
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -89,21 +89,18 @@ function Budget() {
   };
 
   if (loading) {
-  return (
-    <Layout>
-      <LoadingSpinner text="Loading your  Budgets..." />
-    </Layout>
-  );
-}
+    return (
+      <Layout>
+        <LoadingSpinner text="Loading your  Budgets..." />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
       {/* Header */}
       <div className="mb-8">
-      
-
-          <h1 className="text-3xl font-bold text-gray-800">Monthly Budget</h1>
-        
+        <h1 className="text-3xl font-bold text-gray-800">Monthly Budget</h1>
 
         <p className="text-gray-500">
           Set category-wise budgets and monitor your spending progress.

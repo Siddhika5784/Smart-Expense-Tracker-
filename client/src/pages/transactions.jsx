@@ -3,7 +3,7 @@ import TransactionFilters from "../components/Transactions/TransactionFilters";
 import TransactionList from "../components/Transactions/TransactionList";
 import api from "../services/api";
 import Layout from "../components/Layout/Layout";
-import LoadingSpinner from "../components/common/Loading";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 function Transactions() {
   const [expenses, setExpenses] = useState([]);

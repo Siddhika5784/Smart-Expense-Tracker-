@@ -3,12 +3,12 @@ import ExpenseForm from "../components/expense/ExpenseForm";
 import ExpenseList from "../components/expense/ExpenseList";
 import api from "../services/api";
 import Layout from "../components/Layout/Layout";
-import LoadingSpinner from "../components/Common/Loading";
+import LoadingSpinner from "../components/Common/LoadingSpinner";
 
 function AddExpense() {
   const [expenses, setExpenses] = useState([]);
   const [editExpense, setEditExpense] = useState(null);
-  const [loading, setLoading] =useState(true);
+  const [loading, setLoading] = useState(true);
 
   const fetchExpenses = async () => {
     setLoading(true);
@@ -17,7 +17,7 @@ function AddExpense() {
       setExpenses(response.data.expenses);
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -55,45 +55,42 @@ function AddExpense() {
     fetchExpenses();
   }, []);
 
-if (loading) {
+  if (loading) {
+    return (
+      <Layout>
+        <LoadingSpinner text="Loading your expenses..." />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <LoadingSpinner text="Loading your expenses..." />
-    </Layout>
-  );
-}
+      {/* Page Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">Add Expense</h1>
 
-  return (
- <Layout>
+        <p className="mt-2 text-gray-500">
+          Record a new expense and keep track of your spending.
+        </p>
+      </div>
 
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Add Expense
-          </h1>
+      {/* Form */}
+      <div className="max-w-3xl">
+        <ExpenseForm
+          addExpense={addExpense}
+          editExpense={editExpense}
+          updateExpense={updateExpense}
+        />
+      </div>
 
-          <p className="mt-2 text-gray-500">
-            Record a new expense and keep track of your spending.
-          </p>
-        </div>
-
-        {/* Form */}
-        <div className="max-w-3xl">
-          <ExpenseForm
-            addExpense={addExpense}
-            editExpense={editExpense}
-            updateExpense={updateExpense}
-          />
-        </div>
-
-        {/* Expense List */}
-        <div className="mt-10">
-          <ExpenseList
-            expenses={expenses}
-            deleteExpense={deleteExpense}
-            setEditExpense={setEditExpense}
-          />
-        </div>
+      {/* Expense List */}
+      <div className="mt-10">
+        <ExpenseList
+          expenses={expenses}
+          deleteExpense={deleteExpense}
+          setEditExpense={setEditExpense}
+        />
+      </div>
     </Layout>
   );
 }
