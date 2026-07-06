@@ -3,7 +3,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AddExpense from "./pages/AddExpense";
-import Transactions from "./pages/Transactions";
+import Transactions from "./pages/transactions";
 import Budget from "./pages/Budget";
 import Insights from "./pages/Insights";
 import Login from "./pages/Login";
