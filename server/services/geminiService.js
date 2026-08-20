@@ -45,14 +45,15 @@ Return ONLY the JSON object matching the required schema.
           dailyHabit: {
             type: "string",
             description:
-              "One practical daily habit adjustment the user can follow to reduce spending.",
+              "One practical daily habit adjustment the user can follow to reduce spending and save money.",
           },
 
           estimatedSavings: {
             type: "string",
             description:
-              "A concrete estimate of how much money the user could save next month by following the advice.",
+              "A concrete estimate of how much money the user could save next month by following the advice.Always include the Indian Rupee symbol (₹)",
           },
+          
         },
 
         required: [
