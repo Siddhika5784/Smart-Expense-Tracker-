@@ -3,12 +3,15 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const expenseRoutes = require("./routes/expenseRoutes");
 
+// Load environment variables
+dotenv.config();
+
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const budgetRoutes = require("./routes/BudgetRoutes");
 
-// Load environment variables
-dotenv.config();
+const aiRoutes = require("./routes/aiRoutes"); 
+
 
 // Create Express application
 const app = express();
@@ -16,9 +19,11 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/budget", budgetRoutes);
+app.use("/api/ai", aiRoutes);
 
 connectDB();
 

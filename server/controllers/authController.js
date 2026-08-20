@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
 
-  console.log("Request Body:", req.body);
   try {
     // Extract data from request body
     const { name, email, password } = req.body;
