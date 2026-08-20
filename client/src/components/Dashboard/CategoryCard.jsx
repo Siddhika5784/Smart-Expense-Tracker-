@@ -14,7 +14,7 @@ function CategoryCard({expenses}) {
   const categoryTotals = {};
 
   validExpenses.forEach((expense) => {
-    // Optional chaining (?.) stops the crash if an expense item is malformed
+   
     const category = expense?.category;
     if (!category) return; // Skip item completely if it has no category name
 
